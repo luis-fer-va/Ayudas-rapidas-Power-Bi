@@ -1,0 +1,7 @@
+let
+   // Codigo M que muestra la fecha y hora de actualiación.
+    FechaActual = DateTime.LocalNow(),
+    Tabla = #table({"Fecha"}, {{FechaActual}}),
+    #"Changed Type" = Table.TransformColumnTypes(Tabla,{{"Fecha", type datetime}})
+in
+    #"Changed Type"
