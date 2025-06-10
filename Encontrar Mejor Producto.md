@@ -1,5 +1,5 @@
-Medida para obtener el nombre del producto o cualquier dimensión con el valor más alto dentro de una categoria
-
+## Medida para obtener el nombre del producto o cualquier dimensión con el valor más alto dentro de una categoria
+```
 ProductoMasVendidoPorCategoria = 
 CALCULATE (
     SELECTEDVALUE ( D_productos[Producto] ),
@@ -27,3 +27,4 @@ COALESCE (
     DIVIDE ( [$ProductoMasVendidoPorCategoria], 'Medidas Ventas'[ventas], 0 ),
     0
 )
+```
