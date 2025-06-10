@@ -1,3 +1,4 @@
+```
 let
 Source = Duration.TotalSeconds(DateTime.LocalNow() - #datetime(1970,1,1,0,0,0)),
 Source1 = Source1,
@@ -11,3 +12,4 @@ Source2 = Source2,
 
 in
   #"Changed Type"
+```
