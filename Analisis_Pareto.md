@@ -133,6 +133,7 @@ VAR _tabla_pareto =
     )
 RETURN
     COUNTROWS ( _tabla_pareto )
+    
 ´´´
 ✅ ¿Por qué es útil?
 Porque no solo sabemos cuánto representan en ingresos, sino también cuántos productos específicos lo están generando.
