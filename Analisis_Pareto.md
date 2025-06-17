@@ -73,6 +73,7 @@ Tener una lista ordenada para recorrer los elementos del más vendido al menos v
 Luego, obtenemos el ingreso acumulado a medida que se avanza por el ranking, utilizando la función TOPN para ir sumando los productos en orden.
 
 2. Obtener el ingreso acumulado  con ayuda del ranking que creamos antes
+3. 
 ```
 Pareto_producto $ =
 CALCULATE (
@@ -80,6 +81,7 @@ CALCULATE (
     TOPN ( [Rank1], ALLSELECTED ( Dim_Producto[Product] ), [Venta], DESC )
 )
 ```
+
 ✅ ¿Para qué sirve?
 Nos permite ver cuánto ingreso se ha acumulado hasta cada punto del ranking.
 
@@ -87,10 +89,12 @@ Nos permite ver cuánto ingreso se ha acumulado hasta cada punto del ranking.
 
 3️⃣ Expresar el acumulado como porcentaje del total
 Ahora transformamos ese ingreso acumulado en un porcentaje del total, lo que nos permite identificar cuándo alcanzamos el famoso 80%.
-´´´
+
+```
 Pareto_producto % =
 DIVIDE ( [Pareto_producto $], CALCULATE ( [Venta], ALLSELECTED () ) )
-´´´
+```
+
 ✅ ¿Por qué es importante?
 Porque con el porcentaje acumulado podemos saber en qué punto se alcanza el 80% del ingreso total.
 
@@ -99,7 +103,7 @@ Porque con el porcentaje acumulado podemos saber en qué punto se alcanza el 80%
 4️⃣ Visualización con colores para una lectura rápida
 Para facilitar el análisis visual, creamos una medida que asigna un color según el rango acumulado:
 
-´´´
+```
 Color pareto =
 IF (
     [Pareto %] <= 0.8, 
@@ -108,7 +112,8 @@ IF (
     "lIGHTSALMON" )   -- Pinta el resto de valores en Salmon
 )
 
-´´´
+```
+
 ✅ ¿Qué conseguimos?
 Identificamos rápidamente qué productos están dentro del Pareto (verde), los que están en el rango medio (amarillo), y los que aportan poco (salmón).
 
@@ -120,21 +125,22 @@ Ejemplo aplicado con Categoría = Fruver 👇
 
 5️⃣ ¿Cuántos productos conforman ese 80%?
 Para complementar el análisis, creamos una medida que cuenta cuántos productos forman parte del 80% acumulado:
-´´´
-pdtos Pareto =
+
+``` Pdtos_Pareto =
 VAR _tabla_pareto =
     FILTER (
         ADDCOLUMNS (
             SELECTCOLUMNS ( VALUES ( Dim_Producto ), Dim_Producto[Nombre] ),
-            "@pareto", [Pareto producto%]
+            "@pareto", [Pareto_producto %]
         ),
         [Venta] <> BLANK ()
-            && [Pareto producto%] <= 0.8
+            && [Pareto_producto %] <= 0.8
     )
 RETURN
     COUNTROWS ( _tabla_pareto )
-    
-´´´
+
+```
+
 ✅ ¿Por qué es útil?
 Porque no solo sabemos cuánto representan en ingresos, sino también cuántos productos específicos lo están generando.
 
@@ -165,6 +171,3 @@ Esto confirma el principio de Pareto y resalta la necesidad de enfocar esfuerzos
 > **Documento elaborado por: Luis Vallejo  
 > **Versión:** 1.0  
 > **Fecha:** Junio 2025
-
-
-
